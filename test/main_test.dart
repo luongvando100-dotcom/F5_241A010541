@@ -43,7 +43,10 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(const MyApp());
-    await tester.drag(find.byKey(const ValueKey<int>(3)), const Offset(-600, 0));
+    await tester.drag(
+      find.byKey(const ValueKey<int>(3)),
+      const Offset(-600, 0),
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Sổ tay sinh viên'), findsNothing);
@@ -52,15 +55,22 @@ void main() {
     expect(_productCount(tester), 5);
   });
 
-  testWidgets('search filters by name and can be cleared', (tester) async {
+  testWidgets('search handles case, whitespace, no results, and clearing', (
+    tester,
+  ) async {
     await tester.pumpWidget(const MyApp());
-    await tester.enterText(find.byKey(const ValueKey('product-search')), 'balo');
+    final searchField = find.byKey(const ValueKey('product-search'));
+    await tester.enterText(searchField, ' BALO ');
     await tester.pumpAndSettle();
 
     expect(find.text('Balo laptop'), findsOneWidget);
     expect(find.text('Áo thun VHU'), findsNothing);
 
-    await tester.tap(find.byTooltip('Xóa tìm kiếm'));
+    await tester.enterText(searchField, 'khong co san pham');
+    await tester.pumpAndSettle();
+    expect(find.text('Không tìm thấy sản phẩm'), findsOneWidget);
+
+    await tester.tap(find.text('Xóa tìm kiếm'));
     await tester.pumpAndSettle();
     expect(_productCount(tester), 6);
   });
