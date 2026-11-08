@@ -3,6 +3,10 @@
 Ứng dụng Flutter Material 3 minh họa `ListView.builder`, `Dismissible`,
 `GridView.builder`, model dữ liệu, tìm kiếm và trạng thái rỗng.
 
+Tìm kiếm lọc theo tên, không phân biệt chữ hoa/chữ thường; có thể xóa từ khóa
+để xem lại danh sách. Khi không có sản phẩm phù hợp, ứng dụng hiển thị thông
+báo riêng.
+
 ## Chạy ứng dụng
 
 ```powershell
